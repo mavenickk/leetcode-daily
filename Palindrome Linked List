@@ -1,0 +1,63 @@
+Given the head of a singly linked list, return true if it is a palindrome.
+
+Constraints:
+
+The number of nodes in the list is in the range [1, 105].
+0 <= Node.val <= 9
+ 
+
+Follow up: Could you do it in O(n) time and O(1) space?
+
+
+
+
+Code:
+
+# Definition for singly-linked list.
+# class ListNode:
+#     def __init__(self, val=0, next=None):
+#         self.val = val
+#         self.next = next
+class Solution:
+    def isPalindrome(self, head: ListNode) -> bool:
+        temp = head
+        size=0
+        while temp:
+            size+=1
+            temp = temp.next
+        #print(size)
+        s1 = size//2
+        temp=head
+        head1 = None
+        head2 = None
+        prev=None
+        for i in range(s1):
+            t1 = temp.next
+            temp.next = prev
+            prev = temp
+            temp = t1
+        head1 = prev
+        head2 = temp
+        if size%2!=0:
+            head2 = head2.next
+        """temp = head1
+        rev = []
+        while temp:
+            rev.append(temp.val)
+            temp = temp.next
+        temp = head2
+        fo = []
+        while temp:
+            fo.append(temp.val)
+            temp = temp.next
+        #print(rev)
+        #print(fo)
+        """
+        flag=True
+        while head2:
+            if head2.val!=head1.val:
+                #print(head2.val, head1.val)
+                return False
+            head2 = head2.next
+            head1 = head1.next
+        return True
