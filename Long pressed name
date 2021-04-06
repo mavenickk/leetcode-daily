@@ -1,0 +1,74 @@
+Q
+Your friend is typing his name into a keyboard. Sometimes, when typing a character c, the key might get long pressed, and the character will be typed 1 or more times.
+
+You examine the typed characters of the keyboard. Return True if it is possible that it was your friends name, with some characters (possibly none) being long pressed.
+
+ 
+
+Example 1:
+
+Input: name = "alex", typed = "aaleex"
+Output: true
+Explanation: 'a' and 'e' in 'alex' were long pressed.
+Example 2:
+
+Input: name = "saeed", typed = "ssaaedd"
+Output: false
+Explanation: 'e' must have been pressed twice, but it wasn't in the typed output.
+Example 3:
+
+Input: name = "leelee", typed = "lleeelee"
+Output: true
+Example 4:
+
+Input: name = "laiden", typed = "laiden"
+Output: true
+Explanation: It's not necessary to long press any character
+
+
+
+Code
+
+class Solution(object):
+    def isLongPressedName(self, name, typed):
+        """
+        :type name: str
+        :type typed: str
+        :rtype: bool
+        """
+        ln = len(name)
+        lt = len(typed)
+        if name[0]!=typed[0] or name[ln-1]!=typed[lt-1]:
+            return False
+        itr = 0
+        flag=True
+        
+        i=0
+        while i<ln and itr<lt:
+            if name[i]==typed[itr]:
+                count=1
+                for j in range(i+1,ln):
+                    if name[j]==name[i]:
+                        count+=1
+                    else: 
+                        break
+                count2=1
+                for j in range(itr+1,lt):
+                    if typed[j]==typed[itr]:
+                        count2+=1
+                    else: 
+                        break
+                print(count," ",count2, " for ", i)
+                itr+=count2
+                i+=count
+                print("updated i and j ",i," ",j)
+                if count>count2:
+                    print("count not equal at pos",i," and ",itr, " for letter ", name[i])
+                    return False
+            
+            else:
+                print("name of ",i," not equal typed ",itr)
+                return False
+        if itr<lt or i<ln:
+            return False
+        return flag
