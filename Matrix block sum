@@ -1,0 +1,49 @@
+Q.
+Given a m x n matrix mat and an integer k, return a matrix answer where each answer[i][j] is the sum of all elements mat[r][c] for:
+
+i - k <= r <= i + k,
+j - k <= c <= j + k, and
+(r, c) is a valid position in the matrix.
+ 
+
+Example 1:
+
+Input: mat = [[1,2,3],[4,5,6],[7,8,9]], k = 1
+Output: [[12,21,16],[27,45,33],[24,39,28]]
+Example 2:
+
+Input: mat = [[1,2,3],[4,5,6],[7,8,9]], k = 2
+Output: [[45,45,45],[45,45,45],[45,45,45]]
+
+
+Code:
+
+class Solution(object):
+    def matrixBlockSum(self, mat, k):
+        """
+        :type mat: List[List[int]]
+        :type k: int
+        :rtype: List[List[int]]
+        """
+        m = len(mat)
+        n = len(mat[0])
+        #ans = [[0]*n]*m
+        answer=[]
+        #print(ans)
+        for i in range(m):
+            answer2 = []
+            for j in range(n):
+                temp=0
+                for r in range(max(0,i-k),min(m,i+k+1)):
+                    for c in range(max(0,j-k),min(n,j+k+1)):
+                        #if (i - k <= r <= i + k) and (j - k <= c <= j + k):
+                        temp+=mat[r][c]
+                        #print("adding for ",i," ",j, " values of indexes ",r," ",c)
+                        #print(temp, " is the ans after adding ",mat[r][c])
+                #ans[i][j] = temp
+                answer2.append(temp)
+                #print("updating ans for ", i," ",j, " as ", ans[i][j])
+            answer.append(answer2)
+        
+        print(answer)
+        return answer
